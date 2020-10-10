@@ -25,13 +25,13 @@ def get_location
 end
 
 def get_cohort
-  months = Date::MONTHNAMES[1..-1]
+  months = Date::MONTHNAMES[1..-1].map(&:downcase)
   puts "Enter the student's cohort..."
-  cohort = gets.chomp.capitalize
+  cohort = gets.chomp.downcase
 
   while !months.include?(cohort)
     puts "Invalid! Please enter a month."
-    cohort = gets.chomp.capitalize
+    cohort = gets.chomp.downcase
   end
 
   cohort
