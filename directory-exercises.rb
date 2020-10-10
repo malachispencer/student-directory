@@ -62,3 +62,23 @@ def input_students
 
   students
 end
+
+def print_header
+  puts "The students of Villains Academy".center(100)
+  puts "-------------".center(100)
+end
+
+def print_students(students)
+  students.each do |student| 
+    puts "#{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(100)
+  end
+end
+
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students".center(100)
+end
+
+students = input_students
+print_header
+print_students(students)
+print_footer(students)
