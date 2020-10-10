@@ -1,12 +1,18 @@
 require "date"
 
+class String
+  def my_chomp
+    self.gsub(/[\n\r]+$/, '')
+  end
+end
+
 def get_name
   puts "Enter the student's name..."
-  name = gets.chomp.downcase
+  name = gets.my_chomp.downcase
 
   while name.empty?
     puts "Empty inputs are invalid!"
-    name = gets.chomp.downcase
+    name = gets.my_chomp.downcase
   end
 
   name
@@ -14,11 +20,11 @@ end
 
 def get_location
   puts "Enter the student's city of residence..."
-  location = gets.chomp.downcase
+  location = gets.my_chomp.downcase
 
   while location.empty?
     puts "Empty inputs are invalid!"
-    location = gets.chomp.downcase
+    location = gets.my_chomp.downcase
   end
 
   location
@@ -27,11 +33,11 @@ end
 def get_cohort
   months = Date::MONTHNAMES[1..-1].map(&:downcase)
   puts "Enter the student's cohort..."
-  cohort = gets.chomp.downcase
+  cohort = gets.my_chomp.downcase
 
   while !months.include?(cohort)
     puts "Invalid! Please enter a month."
-    cohort = gets.chomp.downcase
+    cohort = gets.my_chomp.downcase
   end
 
   cohort
@@ -42,11 +48,11 @@ def input_students
 
   loop do
     puts "Add a student to the directory? (y/n)"
-    add_student = gets.chomp.downcase
+    add_student = gets.my_chomp.downcase
 
     while !%w[y n].include?(add_student)
       puts "Invalid, please enter y or n."
-      add_student = gets.chomp.downcase
+      add_student = gets.my_chomp.downcase
     end
 
     break if add_student == "n"
@@ -69,30 +75,30 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy".center(100)
-  puts "-------------".center(100)
+  puts "The students of Villains Academy".center(70)
+  puts "-------------".center(70)
 end
 
 def print_students(students)
   students.each_with_index do |student, i| 
-    puts "#{i + 1}. #{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(100)
+    puts "#{i + 1} -- #{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(70)
   end
 end
 
 def print_by_cohort(students, cohort)
-  students = students.reject {|student| student[:cohort] != cohort}
-  puts "Students in the #{cohort.capitalize} cohort".center(100)
+  students = students.reject {|student| student[:cohort] != cohort.downcase}
+  puts "Students in the #{cohort} cohort".center(70)
   students.each_with_index do |student, i| 
-    puts "#{i + 1}. #{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(100)
+    puts "#{i + 1} -- #{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(70)
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(100)
+  puts "Overall, we have #{students.count} great students".center(70)
 end
 
-students = input_students
-print_header
-print_students(students)
+#students = input_students
+#print_header
+#print_students(students)
 #print_by_cohort(students, "october")
-print_footer(students)
+#print_footer(students)
