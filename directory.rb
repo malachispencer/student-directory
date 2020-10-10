@@ -1,6 +1,4 @@
 
-# We store our list of students in an array
-
 students = [
   "Dr. Hannibal Lecter",
   "Darth Vader",
@@ -15,12 +13,19 @@ students = [
   "Norman Bates"
 ]
 
-# We print our list of students
+def print_header
+  puts "The students of Villains Academy"
+  puts "-------------"
+end
 
-puts "The students of Villains Academy"
-puts "-------------"
-puts students
+def print_students(students)
+  puts students
+end
 
-# We then print the total number of students
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
+end
 
-puts "Overall, we have #{students.count} great students"
+print_header
+print_students(students)
+print_footer(students)
