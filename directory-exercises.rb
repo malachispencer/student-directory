@@ -41,7 +41,6 @@ def input_students
   students = []
 
   loop do
-
     puts "Add a student to the directory? (y/n)"
     add_student = gets.chomp.downcase
 
@@ -58,6 +57,12 @@ def input_students
     student[:cohort] = get_cohort
 
     students.push(student)
+
+    if students.length == 1
+      puts "We have #{students.length} student."
+    else
+      puts "We have #{students.length} students."
+    end
   end
 
   students
@@ -69,8 +74,16 @@ def print_header
 end
 
 def print_students(students)
-  students.each do |student| 
-    puts "#{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(100)
+  students.each_with_index do |student, i| 
+    puts "#{i + 1}. #{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(100)
+  end
+end
+
+def print_by_cohort(students, cohort)
+  students = students.reject {|student| student[:cohort] != cohort}
+  puts "Students in the #{cohort.capitalize} cohort".center(100)
+  students.each_with_index do |student, i| 
+    puts "#{i + 1}. #{student[:name]} -- #{student[:location]} -- #{student[:cohort]}".center(100)
   end
 end
 
@@ -81,4 +94,5 @@ end
 students = input_students
 print_header
 print_students(students)
+#print_by_cohort(students, "october")
 print_footer(students)
