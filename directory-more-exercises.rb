@@ -8,13 +8,28 @@ def interactive_menu
 end
 
 def print_menu
-  puts 'Enter 1 to create new directory'
-  puts 'Enter 2 to load existing directory'
-  puts 'Enter 3 to update existing directory'
-  puts 'Enter 4 to delete existing directory'
-  puts 'Enter 9 to quit'
+  puts '1. Create new directory'
+  puts '2. Display existing directory'
+  puts '3. Update existing directory'
+  puts '4. Delete existing directory'
+  puts '9. Exit'
 end
 
 def process(selection)
-  
+  case selection
+  when '1'
+    input_students
+  #when '2'
+    #read_directory
+  #when '3'
+    #update_directory
+  #when '4'
+    #delete_directory
+  when '9'
+    exit
+  else
+    puts 'Invalid input, please choose a valid option.'
+  end
 end
+
+interactive_menu
