@@ -20,8 +20,8 @@ def main_process(selection)
   case selection
   when '1'
     new_dir_process
-  #when '2'
-    #read_directory
+  when '2'
+    display_dir_process
   #when '3'
     #update_directory
   when '4'
@@ -133,6 +133,40 @@ def get_cohort
   cohort
 end
 
+# DISPLAY DIRECTORY
+
+def display_dir_process
+  print 'Choose a directory from below to display,'
+  puts ' include file extension ".csv"'
+  display_csv_files
+  filename = get_dir_to_display
+  get_students(filename)
+  print_header(filename)
+  print_students_list
+end
+
+def get_dir_to_display
+  dirs = Dir["*.csv"]
+  dir_to_show = STDIN.gets.chomp.downcase
+
+  while !dirs.include?(dir_to_show)
+    puts 'Oops, file does not exist!'
+    dir_to_show = STDIN.gets.chomp
+  end
+
+  dir_to_show
+end
+
+def get_students(filename)
+  @students = []
+  file = File.open(filename, 'r')
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort}
+  end
+  @students
+end
+
 # DELETE DIRECTORY
 
 def remove_dir_process
@@ -163,9 +197,9 @@ end
 
 # PRINTING
 
-def print_header
-  puts 'students list'.center(50)
-  puts '----------'.center(50)
+def print_header(filename = 'list')
+  puts "students in #{filename}".center(50)
+  puts '----------------'.center(50)
 end
 
 def print_students_list
