@@ -82,8 +82,10 @@ def save_students_process
 end
 
 def save_students
-  puts 'Enter filename of csv to save students in'
-  filename = "#{STDIN.gets.chomp.downcase}.csv"
+  puts 'Enter filename'
+  raw_filename = STDIN.gets.chomp
+  filename = validate_filename(raw_filename)
+  filename = "#{filename}.csv"
   file = File.open(filename, 'w')
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -91,6 +93,16 @@ def save_students
     file.puts csv_line
   end
   file.close
+end
+
+def validate_filename(filename)
+  until /^[\w\.\-]+$/ === filename
+    print 'Valid filename includes '
+    print 'letters, numbers, underscores, '
+    puts 'dashes and periods only.'
+    filename = STDIN.gets.chomp
+  end
+  filename
 end
 
 def get_name
