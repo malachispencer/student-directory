@@ -18,7 +18,7 @@ end
 def process(selection)
   case selection
   when "1"
-    students = input_students
+    input_students
   when "2"
     show_students
   when "3"
