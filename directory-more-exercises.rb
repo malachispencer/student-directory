@@ -1,4 +1,5 @@
 require 'date'
+require 'fileutils'
 
 def interactive_menu
   loop do
@@ -23,14 +24,16 @@ def main_process(selection)
     #read_directory
   #when '3'
     #update_directory
-  #when '4'
-    #delete_directory
+  when '4'
+    remove_dir_process
   when '9'
     exit
   else
     puts 'Invalid input, please choose a valid option.'
   end
 end
+
+# CREATE NEW DIRECTORY
 
 def new_dir_process
   input_students_process
@@ -130,6 +133,36 @@ def get_cohort
   cohort
 end
 
+# DELETE DIRECTORY
+
+def remove_dir_process
+  print 'Choose a directory from below to remove, '
+  puts 'include file extension ".csv"'
+  display_csv_files
+  remove_dir
+end
+
+def remove_dir
+  dirs = Dir["*.csv"]
+  dir_to_rm = STDIN.gets.chomp
+
+  while !dirs.include?(dir_to_rm)
+    puts 'Oops, file does not exist!'
+    dir_to_rm = STDIN.gets.chomp
+  end
+
+  rm_dir = validate_dir_to_rm(dir_to_rm)
+  FileUtils.rm_rf("./#{dir_to_rm}") if rm_dir == 'y'
+end
+
+def validate_dir_to_rm(dir_name)
+  puts "Are you sure you wish to delete #{dir_name}?"
+  puts 'Return y to continue, any other input will cancel the process.'
+  rm_dir = STDIN.gets.chomp
+end
+
+# PRINTING
+
 def print_header
   puts 'students list'.center(50)
   puts '----------'.center(50)
@@ -139,6 +172,10 @@ def print_students_list
   @students.each do |student|
     puts "#{student[:name]} -- #{student[:cohort]}".center(50)
   end
+end
+
+def display_csv_files
+  print "#{Dir["*.csv"].join(' - ')}\n"
 end
 
 interactive_menu
