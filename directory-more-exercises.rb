@@ -1,9 +1,11 @@
 require 'date'
 
+@students = []
+
 def interactive_menu
   loop do
     print_menu
-    process(STDIN.gets.chomp)
+    main_process(STDIN.gets.chomp)
   end
 end
 
@@ -15,10 +17,10 @@ def print_menu
   puts '9. Exit'
 end
 
-def process(selection)
+def main_process(selection)
   case selection
   when '1'
-    input_students
+    new_dir_process
   #when '2'
     #read_directory
   #when '3'
@@ -29,6 +31,98 @@ def process(selection)
     exit
   else
     puts 'Invalid input, please choose a valid option.'
+  end
+end
+
+def new_dir_process
+  input_students
+  save_students
+end
+
+def input_students
+  loop do
+    puts "Add a student to the directory? (y/n)"
+    add_student = gets.chomp.downcase
+
+    while !%w[y n].include?(add_student)
+      puts "Invalid, please enter y or n."
+      add_student = gets.chomp.downcase
+    end
+
+    break if add_student == "n"
+
+    student = {}
+    student[:name] = get_name
+    student[:cohort] = get_cohort
+    @students.push(student)
+
+    if @students.length == 1
+      puts "We have #{@students.length} student."
+    else
+      puts "We have #{@students.length} students."
+    end
+  end
+end
+
+def save_students_process
+  print_header
+  print_students_list
+  puts 'Would you like to save this list of students? (y/n)'
+  save_list = STDIN.gets.chomp
+
+  while !%w[y n].include?(save_list)
+    puts "Invalid, please enter y or n."
+    save_student = gets.chomp.downcase
+  end
+
+  save_students if save_list == 'y'
+end
+
+def save_students
+  puts 'Enter filename to save students in'
+  filename = "#{STDIN.gets.chomp.downcase}.csv"
+  file = File.open(filename, 'w')
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(', ')
+    file.puts csv_line
+  end
+  file.close
+end
+
+def get_name
+  puts "Enter the student's name..."
+  name = gets.chomp.downcase
+
+  while name.empty?
+    puts "Empty inputs are invalid!"
+    name = gets.chomp.downcase
+  end
+
+  name
+end
+
+def get_cohort
+  months = Date::MONTHNAMES[1..-1].map(&:downcase)
+  puts "Enter the student's cohort..."
+  cohort = gets.chomp.downcase
+
+  while !months.include?(cohort)
+    puts "Invalid! Please enter a month."
+    cohort = gets.chomp.downcase
+  end
+
+  cohort
+end
+
+def print_header
+  puts 'The students of Villains Academy'
+  puts '----------'
+end
+
+def print_students_list
+  @students.each do |student|
+    puts "#{student[:name]} -- #{student[:cohort]}"
   end
 end
 
