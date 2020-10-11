@@ -137,7 +137,7 @@ end
 
 def display_dir_process
   print 'Choose a directory from below to display,'
-  puts ' include file extension ".csv"'
+  puts ' include the file extension.'
   display_csv_files
   filename = get_dir_to_display
   get_students(filename)
@@ -161,7 +161,7 @@ def get_students(filename)
   @students = []
   file = File.open(filename, 'r')
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
+    name, cohort = line.chomp.split(', ')
     @students << {name: name, cohort: cohort}
   end
   @students
@@ -170,8 +170,8 @@ end
 # DELETE DIRECTORY
 
 def remove_dir_process
-  print 'Choose a directory from below to remove, '
-  puts 'include file extension ".csv"'
+  print 'Enter a directory from below to remove, '
+  puts 'include file extension in the name.'
   display_csv_files
   remove_dir
 end
