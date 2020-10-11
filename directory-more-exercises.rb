@@ -1,7 +1,5 @@
 require 'date'
 
-@students = []
-
 def interactive_menu
   loop do
     print_menu
@@ -35,11 +33,13 @@ def main_process(selection)
 end
 
 def new_dir_process
-  input_students
-  save_students
+  input_students_process
+  save_students_process unless @students.empty?
 end
 
-def input_students
+def input_students_process
+  @students = []
+
   loop do
     puts "Add a student to the directory? (y/n)"
     add_student = gets.chomp.downcase
@@ -49,18 +49,21 @@ def input_students
       add_student = gets.chomp.downcase
     end
 
-    break if add_student == "n"
+    break if add_student == 'n'
+    push_student
+  end
+end
 
-    student = {}
-    student[:name] = get_name
-    student[:cohort] = get_cohort
-    @students.push(student)
+def push_student
+  student = {}
+  student[:name] = get_name
+  student[:cohort] = get_cohort
+  @students.push(student)
 
-    if @students.length == 1
-      puts "We have #{@students.length} student."
-    else
-      puts "We have #{@students.length} students."
-    end
+  if @students.length == 1
+    puts "We have #{@students.length} student."
+  else
+    puts "We have #{@students.length} students."
   end
 end
 
@@ -79,7 +82,7 @@ def save_students_process
 end
 
 def save_students
-  puts 'Enter filename to save students in'
+  puts 'Enter filename of csv to save students in'
   filename = "#{STDIN.gets.chomp.downcase}.csv"
   file = File.open(filename, 'w')
   @students.each do |student|
@@ -116,13 +119,13 @@ def get_cohort
 end
 
 def print_header
-  puts 'The students of Villains Academy'
-  puts '----------'
+  puts 'students list'.center(50)
+  puts '----------'.center(50)
 end
 
 def print_students_list
   @students.each do |student|
-    puts "#{student[:name]} -- #{student[:cohort]}"
+    puts "#{student[:name]} -- #{student[:cohort]}".center(50)
   end
 end
 
