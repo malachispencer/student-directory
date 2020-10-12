@@ -1,4 +1,4 @@
-module DisplayDirectory
+module ShowDirectory
   def get_directory
     dirs = Dir["*.csv"]
     dir_to_show = STDIN.gets.chomp.downcase
@@ -11,13 +11,14 @@ module DisplayDirectory
     dir_to_show
   end
   
-  def get_students(filename)
+  def get_students(directory)
     @students = []
-    file = File.open(filename, 'r')
+    file = File.open(directory, 'r')
     file.readlines.each do |line|
       name, cohort = line.chomp.split(', ')
       @students << {name: name, cohort: cohort}
     end
+    file.close
     @students
   end
 end

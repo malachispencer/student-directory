@@ -1,8 +1,8 @@
 require 'fileutils'
 require './modules/create-directory.rb'
-require './modules/display-directory.rb'
+require './modules/show-directory.rb'
 include CreateDirectory
-include DisplayDirectory
+include ShowDirectory
 
 def interactive_menu
   loop do
@@ -13,7 +13,7 @@ end
 
 def print_menu
   puts '1. Create new directory'
-  puts '2. Display existing directory'
+  puts '2. Show existing directory'
   puts '3. Update existing directory'
   puts '4. Delete existing directory'
   puts '9. Exit'
@@ -22,9 +22,9 @@ end
 def menu_process(selection)
   case selection
   when '1'
-    new_directory
+    create_directory
   when '2'
-    display_dir_process
+    show_directory
   #when '3'
     #update_directory
   when '4'
@@ -38,20 +38,21 @@ end
 
 # CREATE NEW DIRECTORY
 
-def new_directory
+def create_directory
   CreateDirectory.add_students?
   CreateDirectory.save_students?
 end
 
 # DISPLAY DIRECTORY
 
-def display_dir_process
+def show_directory
   print 'Choose a directory from below to display,'
   puts ' include the file extension.'
   display_csv_files
-  dir_to_show = DisplayDirectory.get_directory
-  students = DisplayDirectory.get_students(dir_to_show)
-  print_header(dir_to_show)
+  
+  directory = ShowDirectory.get_directory
+  students = ShowDirectory.get_students(directory)
+  print_header(directory)
   print_students_list(students)
 end
 
