@@ -1,6 +1,8 @@
 require 'fileutils'
 require './modules/create-directory.rb'
+require './modules/display-directory.rb'
 include CreateDirectory
+include DisplayDirectory
 
 def interactive_menu
   loop do
@@ -41,133 +43,16 @@ def new_directory
   CreateDirectory.save_students?
 end
 
-=begin
-def input_students_process
-  @students = []
-
-  loop do
-    puts "Add a student to the directory? (y/n)"
-    add_student = gets.chomp.downcase
-
-    while !%w[y n].include?(add_student)
-      puts "Invalid, please enter y or n."
-      add_student = gets.chomp.downcase
-    end
-
-    break if add_student == 'n'
-    push_student
-  end
-end
-
-def push_student
-  student = {}
-  student[:name] = get_name
-  student[:cohort] = get_cohort
-  @students.push(student)
-
-  if @students.length == 1
-    puts "We have #{@students.length} student."
-  else
-    puts "We have #{@students.length} students."
-  end
-end
-
-def save_students_process
-  print_header
-  print_students_list
-  puts 'Would you like to save this list of students? (y/n)'
-  save_list = STDIN.gets.chomp
-
-  while !%w[y n].include?(save_list)
-    puts "Invalid, please enter y or n."
-    save_student = gets.chomp.downcase
-  end
-
-  save_students if save_list == 'y'
-end
-
-def save_students
-  puts 'Enter filename'
-  raw_filename = STDIN.gets.chomp
-  filename = validate_filename(raw_filename)
-  filename = "#{filename}.csv"
-  file = File.open(filename, 'w')
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(', ')
-    file.puts csv_line
-  end
-  file.close
-end
-
-def validate_filename(filename)
-  until /^[\w\.\-]+$/ === filename
-    print 'Valid filename includes '
-    print 'letters, numbers, underscores, '
-    puts 'dashes and periods only.'
-    filename = STDIN.gets.chomp
-  end
-  filename
-end
-
-def get_name
-  puts "Enter the student's name..."
-  name = gets.chomp.downcase
-
-  while name.empty?
-    puts "Empty inputs are invalid!"
-    name = gets.chomp.downcase
-  end
-
-  name
-end
-
-def get_cohort
-  months = Date::MONTHNAMES[1..-1].map(&:downcase)
-  puts "Enter the student's cohort..."
-  cohort = gets.chomp.downcase
-
-  while !months.include?(cohort)
-    puts "Invalid! Please enter a month."
-    cohort = gets.chomp.downcase
-  end
-
-  cohort
-end
-=end
-
 # DISPLAY DIRECTORY
 
 def display_dir_process
   print 'Choose a directory from below to display,'
   puts ' include the file extension.'
   display_csv_files
-  filename = get_dir_to_display
-  get_students(filename)
-  print_header(filename)
-  print_students_list
-end
-
-def get_dir_to_display
-  dirs = Dir["*.csv"]
-  dir_to_show = STDIN.gets.chomp.downcase
-
-  while !dirs.include?(dir_to_show)
-    puts 'Oops, file does not exist!'
-    dir_to_show = STDIN.gets.chomp
-  end
-
-  dir_to_show
-end
-
-def get_students(filename)
-  @students = []
-  file = File.open(filename, 'r')
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(', ')
-    @students << {name: name, cohort: cohort}
-  end
-  @students
+  dir_to_show = DisplayDirectory.get_directory
+  students = DisplayDirectory.get_students(dir_to_show)
+  print_header(dir_to_show)
+  print_students_list(students)
 end
 
 # DELETE DIRECTORY
@@ -205,8 +90,8 @@ def print_header(filename = 'list')
   puts '----------------'.center(50)
 end
 
-def print_students_list
-  @students.each do |student|
+def print_students_list(students = @students)
+  students.each do |student|
     puts "#{student[:name]} -- #{student[:cohort]}".center(50)
   end
 end

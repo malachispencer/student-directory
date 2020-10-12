@@ -1,3 +1,5 @@
+require 'date'
+
 module CreateDirectory
   def add_students?
     @students = []
