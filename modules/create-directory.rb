@@ -83,12 +83,14 @@ module CreateDirectory
   end
   
   def validate_filename(filename)
-    until /^[\w\.\-]+(.csv)$/ === filename
+    until /^[\w\.\-]+(.csv)$/ === filename && !Dir['*.csv'].include?(filename)
       print 'Valid filename includes letters, numbers'
-      print ', underscores, dashes and periods only.'
-      puts 'Include extension .csv.'
+      puts ', underscores, dashes and periods only.'
+      print 'Include extension .csv and ensure filename'
+      puts ' is not already taken.'
       filename = STDIN.gets.chomp
     end
     filename
   end
+  
 end

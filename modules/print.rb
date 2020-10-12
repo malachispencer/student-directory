@@ -10,8 +10,9 @@ module Print
   end
 
   def header(filename = 'list')
-    puts "students in #{filename}"
-    puts '-----------------------'
+    title = "students in #{filename}"
+    puts title
+    puts '-' * title.length
   end
   
   def students(students)
