@@ -1,6 +1,6 @@
 module Print
   def main_menu
-    puts 'Main menu'
+    puts "\nMain menu"
     puts '---------'
     puts '1. Create new directory'
     puts '2. Show existing directory'
@@ -10,7 +10,7 @@ module Print
   end
 
   def header(filename = 'list')
-    title = "students in #{filename}"
+    title = "\nstudents in #{filename}"
     puts title
     puts '-' * title.length
   end

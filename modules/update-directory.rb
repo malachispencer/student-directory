@@ -52,6 +52,7 @@ module UpdateDirectory
     puts 'Enter new filename'
     filename = CreateDirectory.validate_filename(STDIN.gets.chomp)
     File.rename(directory, "#{filename}")
+    puts "#{directory} renamed to #{filename}."
   end
 
   

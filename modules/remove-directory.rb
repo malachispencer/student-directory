@@ -21,12 +21,13 @@ module RemoveDirectory
   def remove_directory(directory)
     remove = are_you_sure?(directory)
     FileUtils.rm_rf("./#{directory}") if remove == 'y'
+    puts "#{directory} deleted."
   end
 
   def are_you_sure?(directory)
     puts "Are you sure you wish to delete #{directory}?"
     puts 'Return y to continue.'
-    puts 'Any other key will cancel the process.'
+    puts "Any other key will cancel the process."
     remove = STDIN.gets.chomp
   end
 end

@@ -59,7 +59,7 @@ module CreateDirectory
   end
   
   def save_students?
-    puts 'Would you like to save this list of students? (y/n)'
+    puts "\nWould you like to save this list of students? (y/n)"
     save_list = STDIN.gets.chomp
     
     while !%w[y n].include?(save_list)
@@ -80,6 +80,7 @@ module CreateDirectory
       file.puts csv_line
     end
     file.close
+    puts "#{filename} directory created."
   end
   
   def validate_filename(filename)
