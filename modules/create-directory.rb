@@ -1,10 +1,5 @@
 module CreateDirectory
-  def new_dir_process
-    input_students_process
-    save_students_process unless @students.empty?
-  end
-  
-  def input_students_process
+  def add_students?
     @students = []
   
     loop do
@@ -33,8 +28,33 @@ module CreateDirectory
       puts "We have #{@students.length} students."
     end
   end
+
+  def get_name
+    puts "Enter the student's name..."
+    name = gets.chomp.downcase
+
+    while name.empty?
+      puts "Empty inputs are invalid!"
+      name = gets.chomp.downcase
+    end
+
+    name
+  end
   
-  def save_students_process
+  def get_cohort
+    months = Date::MONTHNAMES[1..-1].map(&:downcase)
+    puts "Enter the student's cohort..."
+    cohort = gets.chomp.downcase
+  
+    while !months.include?(cohort)
+      puts "Invalid! Please enter a month."
+      cohort = gets.chomp.downcase
+    end
+  
+    cohort
+  end
+  
+  def save_students?
     if !@students.empty?
       print_header
       print_students_list
@@ -52,8 +72,7 @@ module CreateDirectory
   
   def save_students
     puts 'Enter filename'
-    raw_filename = STDIN.gets.chomp
-    filename = validate_filename(raw_filename)
+    filename = validate_filename(STDIN.gets.chomp)
     filename = "#{filename}.csv"
     file = File.open(filename, 'w')
     @students.each do |student|
@@ -72,30 +91,5 @@ module CreateDirectory
       filename = STDIN.gets.chomp
     end
     filename
-  end
-  
-  def get_name
-    puts "Enter the student's name..."
-    name = gets.chomp.downcase
-  
-    while name.empty?
-      puts "Empty inputs are invalid!"
-      name = gets.chomp.downcase
-    end
-  
-    name
-  end
-  
-  def get_cohort
-    months = Date::MONTHNAMES[1..-1].map(&:downcase)
-    puts "Enter the student's cohort..."
-    cohort = gets.chomp.downcase
-  
-    while !months.include?(cohort)
-      puts "Invalid! Please enter a month."
-      cohort = gets.chomp.downcase
-    end
-  
-    cohort
   end
 end

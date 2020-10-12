@@ -1,4 +1,3 @@
-require 'date'
 require 'fileutils'
 require './modules/create-directory.rb'
 include CreateDirectory
@@ -6,7 +5,7 @@ include CreateDirectory
 def interactive_menu
   loop do
     print_menu
-    main_process(STDIN.gets.chomp)
+    menu_process(STDIN.gets.chomp)
   end
 end
 
@@ -18,10 +17,10 @@ def print_menu
   puts '9. Exit'
 end
 
-def main_process(selection)
+def menu_process(selection)
   case selection
   when '1'
-    new_dir_process
+    new_directory
   when '2'
     display_dir_process
   #when '3'
@@ -37,9 +36,9 @@ end
 
 # CREATE NEW DIRECTORY
 
-def new_dir_process
-  CreateDirectory.input_students_process
-  CreateDirectory.save_students_process
+def new_directory
+  CreateDirectory.add_students?
+  CreateDirectory.save_students?
 end
 
 =begin
