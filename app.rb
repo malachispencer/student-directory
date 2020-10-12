@@ -1,9 +1,11 @@
-require './modules/create-directory.rb'
-require './modules/show-directory.rb'
-require './modules/remove-directory.rb'
+require_relative './modules/create-directory.rb'
+require_relative './modules/show-directory.rb'
+require_relative './modules/remove-directory.rb'
+require_relative './modules/print.rb'
 include CreateDirectory
 include ShowDirectory
 include RemoveDirectory
+include Print
 
 def interactive_menu
   loop do
@@ -44,36 +46,21 @@ end
 
 def show_dir_process
   ShowDirectory.instructions
-  display_csv_files
+  Print.csv_files
   directory = ShowDirectory.get_directory
   students = ShowDirectory.get_students(directory)
-  print_header(directory)
-  print_students(students)
+  Print.header(directory)
+  Print.students(students)
 end
 
 def remove_dir_process
   RemoveDirectory.instructions
-  display_csv_files
+  Print.csv_files
   directory = RemoveDirectory.get_directory
   students = ShowDirectory.get_students(directory)
-  print_header(directory)
-  print_students(students)
+  Print.header(directory)
+  Print.students(students)
   RemoveDirectory.remove_directory(directory)
-end
-
-def print_header(filename = 'list')
-  puts "students in #{filename}".center(50)
-  puts '----------------'.center(50)
-end
-
-def print_students(students = @students)
-  students.each do |student|
-    puts "#{student[:name]} -- #{student[:cohort]}".center(50)
-  end
-end
-
-def display_csv_files
-  print "#{Dir["*.csv"].join(' - ')}\n"
 end
 
 interactive_menu

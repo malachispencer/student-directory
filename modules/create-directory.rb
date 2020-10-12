@@ -1,4 +1,6 @@
 require 'date'
+require_relative './print.rb'
+include Print
 
 module CreateDirectory
   def add_students?
@@ -58,8 +60,8 @@ module CreateDirectory
   
   def save_students?
     if !@students.empty?
-      print_header
-      print_students
+      Print.header
+      Print.students(@students)
       puts 'Would you like to save this list of students? (y/n)'
       save_list = STDIN.gets.chomp
     
