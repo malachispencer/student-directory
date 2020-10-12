@@ -73,7 +73,6 @@ module CreateDirectory
   def save_students
     puts 'Enter filename'
     filename = validate_filename(STDIN.gets.chomp)
-    filename = "#{filename}.csv"
     file = File.open(filename, 'w')
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
@@ -84,10 +83,10 @@ module CreateDirectory
   end
   
   def validate_filename(filename)
-    until /^[\w\.\-]+$/ === filename
-      print 'Valid filename includes '
-      print 'letters, numbers, underscores, '
-      puts 'dashes and periods only.'
+    until /^[\w\.\-]+(.csv)$/ === filename
+      print 'Valid filename includes letters, numbers'
+      print ', underscores, dashes and periods only.'
+      puts 'Include extension .csv.'
       filename = STDIN.gets.chomp
     end
     filename
