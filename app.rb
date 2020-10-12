@@ -40,7 +40,10 @@ def menu_process(selection)
 end
 
 def create_dir_process
-  CreateDirectory.add_students?
+  students = CreateDirectory.add_students
+  return if students.empty?
+  Print.header
+  Print.students(students)
   CreateDirectory.save_students?
 end
 

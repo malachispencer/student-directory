@@ -1,9 +1,7 @@
 require 'date'
-require_relative './print.rb'
-include Print
 
 module CreateDirectory
-  def add_students?
+  def add_students
     @students = []
   
     loop do
@@ -18,6 +16,8 @@ module CreateDirectory
       break if add_student == 'n'
       push_student
     end
+
+    @students
   end
   
   def push_student
@@ -59,19 +59,15 @@ module CreateDirectory
   end
   
   def save_students?
-    if !@students.empty?
-      Print.header
-      Print.students(@students)
-      puts 'Would you like to save this list of students? (y/n)'
-      save_list = STDIN.gets.chomp
+    puts 'Would you like to save this list of students? (y/n)'
+    save_list = STDIN.gets.chomp
     
-      while !%w[y n].include?(save_list)
-        puts "Invalid, please enter y or n."
-        save_student = gets.chomp.downcase
-      end
-    
-      save_students if save_list == 'y'
+    while !%w[y n].include?(save_list)
+      puts "Invalid, please enter y or n."
+      save_student = gets.chomp.downcase
     end
+    
+    save_students if save_list == 'y'
   end
   
   def save_students
