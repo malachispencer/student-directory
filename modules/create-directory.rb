@@ -59,7 +59,7 @@ module CreateDirectory
   def save_students?
     if !@students.empty?
       print_header
-      print_students_list
+      print_students
       puts 'Would you like to save this list of students? (y/n)'
       save_list = STDIN.gets.chomp
     

@@ -1,8 +1,9 @@
-require 'fileutils'
 require './modules/create-directory.rb'
 require './modules/show-directory.rb'
+require './modules/remove-directory.rb'
 include CreateDirectory
 include ShowDirectory
+include RemoveDirectory
 
 def interactive_menu
   loop do
@@ -22,9 +23,9 @@ end
 def menu_process(selection)
   case selection
   when '1'
-    create_directory
+    create_dir_process
   when '2'
-    show_directory
+    show_dir_process
   #when '3'
     #update_directory
   when '4'
@@ -36,62 +37,36 @@ def menu_process(selection)
   end
 end
 
-# CREATE NEW DIRECTORY
-
-def create_directory
+def create_dir_process
   CreateDirectory.add_students?
   CreateDirectory.save_students?
 end
 
-# DISPLAY DIRECTORY
-
-def show_directory
-  print 'Choose a directory from below to display,'
-  puts ' include the file extension.'
+def show_dir_process
+  ShowDirectory.instructions
   display_csv_files
-  
   directory = ShowDirectory.get_directory
   students = ShowDirectory.get_students(directory)
   print_header(directory)
-  print_students_list(students)
+  print_students(students)
 end
-
-# DELETE DIRECTORY
 
 def remove_dir_process
-  print 'Enter a directory from below to remove, '
-  puts 'include file extension in the name.'
+  RemoveDirectory.instructions
   display_csv_files
-  remove_dir
+  directory = RemoveDirectory.get_directory
+  students = ShowDirectory.get_students(directory)
+  print_header(directory)
+  print_students(students)
+  RemoveDirectory.remove_directory(directory)
 end
-
-def remove_dir
-  dirs = Dir["*.csv"]
-  dir_to_rm = STDIN.gets.chomp
-
-  while !dirs.include?(dir_to_rm)
-    puts 'Oops, file does not exist!'
-    dir_to_rm = STDIN.gets.chomp
-  end
-
-  rm_dir = validate_dir_to_rm(dir_to_rm)
-  FileUtils.rm_rf("./#{dir_to_rm}") if rm_dir == 'y'
-end
-
-def validate_dir_to_rm(dir_name)
-  puts "Are you sure you wish to delete #{dir_name}?"
-  puts 'Return y to continue, any other input will cancel the process.'
-  rm_dir = STDIN.gets.chomp
-end
-
-# PRINTING
 
 def print_header(filename = 'list')
   puts "students in #{filename}".center(50)
   puts '----------------'.center(50)
 end
 
-def print_students_list(students = @students)
+def print_students(students = @students)
   students.each do |student|
     puts "#{student[:name]} -- #{student[:cohort]}".center(50)
   end

@@ -1,4 +1,9 @@
 module ShowDirectory
+  def instructions
+    print 'Choose a directory from below to display,'
+    puts ' include the file extension.'
+  end
+
   def get_directory
     dirs = Dir["*.csv"]
     dir_to_show = STDIN.gets.chomp.downcase
