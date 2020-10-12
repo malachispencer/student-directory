@@ -1,5 +1,7 @@
 require 'date'
 require 'fileutils'
+require './modules/create-directory.rb'
+include CreateDirectory
 
 def interactive_menu
   loop do
@@ -36,10 +38,11 @@ end
 # CREATE NEW DIRECTORY
 
 def new_dir_process
-  input_students_process
-  save_students_process unless @students.empty?
+  CreateDirectory.input_students_process
+  CreateDirectory.save_students_process
 end
 
+=begin
 def input_students_process
   @students = []
 
@@ -132,6 +135,7 @@ def get_cohort
 
   cohort
 end
+=end
 
 # DISPLAY DIRECTORY
 
