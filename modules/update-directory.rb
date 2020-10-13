@@ -23,7 +23,7 @@ module UpdateDirectory
   end
 
   def get_dir_to_update
-    dirs = Dir['*.csv']
+    dirs = Dir.glob('./directories/*.csv').map {|f| File.basename(f)}
     dir_to_update = STDIN.gets.chomp
 
     while !dirs.include?(dir_to_update)
@@ -51,7 +51,7 @@ module UpdateDirectory
     puts "You are renaming #{directory}"
     puts 'Enter new filename'
     filename = CreateDirectory.validate_filename(STDIN.gets.chomp)
-    File.rename(directory, "#{filename}")
+    File.rename("./directories/#{directory}", "#{filename}")
     puts "#{directory} renamed to #{filename}."
   end
  
@@ -77,7 +77,7 @@ module UpdateDirectory
   end
 
   def append_students(directory, students)
-    CSV.open(directory, 'a') do |row|
+    CSV.open("./directories/#{directory}", 'a') do |row|
       students.each do |student|
         row << [student[:name], " #{student[:cohort]}"]
       end
@@ -148,7 +148,7 @@ module UpdateDirectory
   end
 
   def overwrite_directory(directory, students, deleted)
-    CSV.open(directory, 'w') do |row|
+    CSV.open("./directories/#{directory}", 'w') do |row|
       students.each do |student|
         row << [student[:name], " #{student[:cohort]}"]
       end

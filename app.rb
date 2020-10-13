@@ -11,7 +11,7 @@ include Print
 
 def interactive_menu
   Dir.mkdir('./directories') unless Dir.exist?('./directories')
-
+  
   loop do
     Print.main_menu
     menu_process(STDIN.gets.chomp)
@@ -19,15 +19,29 @@ def interactive_menu
 end
 
 def menu_process(selection)
+  @dirs = Dir.glob('./directories/*.csv').map {|f| File.basename(f)}
+
   case selection
   when '1'
     create_dir_process
   when '2'
-    show_dir_process
+    if @dirs.empty?
+      puts "\nNo directories to show, create a directory first."
+    else
+      show_dir_process
+    end
   when '3'
-    update_directory
+    if @dirs.empty?
+      puts "\nNo directories to update, create a directory first."
+    else
+      update_directory
+    end
   when '4'
-    remove_dir_process
+    if @dirs.empty?
+      puts "\nNo directories to remove, create a directory first."
+    else
+      remove_dir_process
+    end
   when '9'
     exit
   else
