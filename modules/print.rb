@@ -23,7 +23,8 @@ module Print
   end
   
   def csv_files
-    print "#{Dir["*.csv"].join(' - ')}\n"
+    dirs = Dir.glob('./directories/*.csv').map {|f| File.basename(f)}
+    print "#{dirs.join(' - ')}\n"
   end
 
   def update_menu

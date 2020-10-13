@@ -5,7 +5,7 @@ module ShowDirectory
   end
 
   def get_directory
-    dirs = Dir["*.csv"]
+    dirs = Dir.glob('./directories/*.csv').map {|f| File.basename(f)}
     dir_to_show = STDIN.gets.chomp.downcase
   
     while !dirs.include?(dir_to_show)
@@ -18,7 +18,7 @@ module ShowDirectory
   
   def get_students(directory)
     @students = []
-    file = File.open(directory, 'r')
+    file = File.open("./directories/#{directory}", 'r')
     file.readlines.each do |line|
       name, cohort = line.chomp.split(', ')
       @students << {name: name, cohort: cohort}

@@ -10,6 +10,8 @@ include RemoveDirectory
 include Print
 
 def interactive_menu
+  Dir.mkdir('./directories') unless Dir.exist?('./directories')
+
   loop do
     Print.main_menu
     menu_process(STDIN.gets.chomp)
@@ -61,7 +63,7 @@ def update_directory
 end
 
 def remove_dir_process
-  RemoveDirectory.instructions
+  RemoveDirectory.remove_instructions
   Print.csv_files
   directory = RemoveDirectory.get_directory
   students = ShowDirectory.get_students(directory)
