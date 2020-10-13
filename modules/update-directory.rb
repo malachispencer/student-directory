@@ -91,7 +91,10 @@ module UpdateDirectory
     Print.header(directory)
     Print.students(students)
     Print.delete_students_instruction
-    delete = get_students_to_delete(students)
+    indexes_to_delete = get_students_to_delete(students)
+    new_list = delete_students(students, indexes_to_delete)
+    deleted = indexes_to_delete.length
+    overwrite_directory(directory, new_list, deleted)
   end
 
   def get_students_to_delete(students)
@@ -115,6 +118,22 @@ module UpdateDirectory
     input.split(',').map(&:to_i).all? {|n| n > 0 && n <= max}
   end
 
+  def delete_students(students, indexes_to_delete)
+    new_list = students.reject.with_index do |student,i| 
+      indexes_to_delete.include?(i)
+    end
+    new_list
+  end
+
+  def overwrite_directory(directory, students, deleted)
+    CSV.open(directory, 'w') do |row|
+      students.each do |student|
+        row << [student[:name], " #{student[:cohort]}"]
+      end
+    end
+    noun = deleted == 1 ? 'student' : 'students'
+    puts "#{deleted} #{noun} deleted from #{directory}."
+  end
 
 
 
