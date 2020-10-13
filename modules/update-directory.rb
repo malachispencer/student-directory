@@ -87,7 +87,32 @@ module UpdateDirectory
   end
 
   def delete_from_directory(directory)
+    students = ShowDirectory.get_students(directory)
+    Print.header(directory)
+    Print.students(students)
+    Print.delete_students_instruction
+    delete = get_students_to_delete(students)
+  end
 
+  def get_students_to_delete(students)
+    delete = STDIN.gets.chomp
+
+    until valid_chars(delete) && valid_nums(delete, students.length)
+      print 'Invalid, please enter a number, or numbers'
+      puts ' seperated by commas only e.g. "9" or "1,3,5".'
+      puts 'Ensure entry number is included in directory.'
+      delete = STDIN.gets.chomp
+    end
+
+    delete.split(',').map {|n| n.to_i - 1}
+  end
+
+  def valid_chars(input)
+    /^(\d)(,\d)*$/ === input
+  end
+
+  def valid_nums(input, max)
+    input.split(',').map(&:to_i).all? {|n| n > 0 && n <= max}
   end
 
 

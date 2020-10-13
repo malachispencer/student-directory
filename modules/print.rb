@@ -17,8 +17,8 @@ module Print
   end
   
   def students(students)
-    students.each do |student|
-      puts "#{student[:name]} -- #{student[:cohort]}"
+    students.each_with_index do |student,i|
+      puts "#{i + 1}. #{student[:name]} -- #{student[:cohort]}"
     end
   end
   
@@ -39,5 +39,10 @@ module Print
   def update_instruction(action)
     print "\nEnter directory you would like to #{action}"
     puts ', include file extension in the name.'
+  end
+
+  def delete_students_instruction
+    puts "\nSelect one or more entries from above to delete, inputs numbers and commas only."
+    puts 'For example, if you wish to delete students 1 and 3, enter "1,3".'
   end
 end
