@@ -6,7 +6,7 @@ module RemoveDirectory
     puts 'include file extension in the name.'
   end
 
-  def get_directory
+  def get_dir_to_remove
     dirs = Dir.glob('./directories/*.csv').map {|f| File.basename(f)}
     dir_to_rm = STDIN.gets.chomp
   

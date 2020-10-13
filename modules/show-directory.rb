@@ -4,7 +4,7 @@ module ShowDirectory
     puts ' include the file extension.'
   end
 
-  def get_directory
+  def get_dir_to_show
     dirs = Dir.glob('./directories/*.csv').map {|f| File.basename(f)}
     dir_to_show = STDIN.gets.chomp.downcase
   

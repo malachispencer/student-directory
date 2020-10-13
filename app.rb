@@ -60,7 +60,7 @@ end
 def show_dir_process
   ShowDirectory.show_instruction
   Print.csv_files
-  directory = ShowDirectory.get_directory
+  directory = ShowDirectory.get_dir_to_show
   students = ShowDirectory.get_students(directory)
   Print.header(directory)
   Print.students(students)
@@ -79,7 +79,7 @@ end
 def remove_dir_process
   RemoveDirectory.remove_instructions
   Print.csv_files
-  directory = RemoveDirectory.get_directory
+  directory = RemoveDirectory.get_dir_to_remove
   students = ShowDirectory.get_students(directory)
   Print.header(directory)
   Print.students(students)
