@@ -38,7 +38,7 @@ module CreateDirectory
   end
 
   def get_name
-    puts "Enter the student's name..."
+    puts "Enter the student's name."
     name = gets.chomp.downcase
 
     while name.empty?
@@ -51,7 +51,7 @@ module CreateDirectory
   
   def get_cohort
     months = Date::MONTHNAMES[1..-1].map(&:downcase)
-    puts "Enter the student's cohort..."
+    puts "Enter the student's cohort."
     cohort = gets.chomp.downcase
   
     while !months.include?(cohort)
