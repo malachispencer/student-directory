@@ -92,6 +92,8 @@ module UpdateDirectory
     Print.students(students)
     Print.delete_students_instruction
     indexes_to_delete = get_students_to_delete(students)
+    confirm = confirm_delete(students, indexes_to_delete, directory)
+    return if confirm == 'n'
     new_list = delete_students(students, indexes_to_delete)
     deleted = indexes_to_delete.length
     overwrite_directory(directory, new_list, deleted)
@@ -118,6 +120,26 @@ module UpdateDirectory
     input.split(',').map(&:to_i).all? {|n| n > 0 && n <= max}
   end
 
+  def confirm_delete(students, indexes_to_delete, directory)
+    to_be_deleted = students.reject.with_index do |student, i|
+      !indexes_to_delete.include?(i)
+    end
+
+    Print.header
+    Print.students(to_be_deleted)
+    noun = to_be_deleted.length == 1 ? 'student' : 'students'
+    print "\nAre you sure you wish to delete the" 
+    puts " above #{noun} from #{directory} (y/n)?"
+    confirm = STDIN.gets.chomp
+
+    while !%w[y n].include?(confirm)
+      puts 'Invalid! please enter y or n'
+      confirm = STDIN.gets.chomp
+    end
+
+    confirm
+  end
+
   def delete_students(students, indexes_to_delete)
     new_list = students.reject.with_index do |student,i| 
       indexes_to_delete.include?(i)
@@ -134,8 +156,4 @@ module UpdateDirectory
     noun = deleted == 1 ? 'student' : 'students'
     puts "#{deleted} #{noun} deleted from #{directory}."
   end
-
-
-
-
 end

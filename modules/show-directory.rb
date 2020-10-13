@@ -1,6 +1,6 @@
 module ShowDirectory
-  def instructions
-    print 'Choose a directory from below to display,'
+  def show_instruction
+    print 'Enter a directory from below to display,'
     puts ' include the file extension.'
   end
 

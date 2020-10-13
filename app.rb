@@ -42,7 +42,7 @@ def create_dir_process
 end
 
 def show_dir_process
-  ShowDirectory.instructions
+  ShowDirectory.show_instruction
   Print.csv_files
   directory = ShowDirectory.get_directory
   students = ShowDirectory.get_students(directory)
