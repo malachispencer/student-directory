@@ -5,7 +5,7 @@ module CreateDirectory
     @students = []
   
     loop do
-      puts "Add a student to the directory? (y/n)"
+      puts "\nAdd a student to the directory? (y/n)"
       add_student = gets.chomp.downcase
   
       while !%w[y n].include?(add_student)
@@ -64,7 +64,7 @@ module CreateDirectory
     
     while !%w[y n].include?(save_list)
       puts "Invalid, please enter y or n."
-      save_student = gets.chomp.downcase
+      save_list = gets.chomp.downcase
     end
     
     save_students if save_list == 'y'

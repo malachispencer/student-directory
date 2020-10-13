@@ -26,7 +26,7 @@ module Print
   end
 
   def update_menu
-    puts 'Update a directory'
+    puts "\nUpdate a directory"
     puts '------------------'
     puts "What would you like to do?"
     puts '1. Rename a directory'
@@ -36,7 +36,7 @@ module Print
   end
 
   def update_instruction(action)
-    print "Enter directory you would like to #{action}"
+    print "\nEnter directory you would like to #{action}"
     puts ', include file extension in the name.'
   end
 end

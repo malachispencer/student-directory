@@ -1,3 +1,5 @@
+require 'csv'
+
 module UpdateDirectory
 
   ACTIONS = {
@@ -37,8 +39,7 @@ module UpdateDirectory
     when '1'
       rename_directory(directory)
     when '2'
-      #add_students_to_dir
-      puts 'adding...'
+      append_to_directory(directory)
     when '3'
       #delete_students_from_dir
       puts 'deleting...'
@@ -54,8 +55,33 @@ module UpdateDirectory
     File.rename(directory, "#{filename}")
     puts "#{directory} renamed to #{filename}."
   end
-
+ 
+  def append_to_directory(directory)
+    students = CreateDirectory.add_students
+    Print.header
+    Print.students(students)
+    append = append_students?(directory)
+    append_students(directory, students) if append == 'y'
+  end
   
+  def append_students?(directory)
+    puts "\nWould you like to add this list of students to #{directory}? (y/n)"
+    append = STDIN.gets.chomp
+    
+    while !%w[y n].include?(append)
+      puts "Invalid, please enter y or n."
+      append = gets.chomp.downcase
+    end
+    
+    append
+  end
+
+  def append_students(directory, students)
+    CSV.open(directory, 'a') do |csv|
+      puts csv
+    end
+
+  end
 
 
 
