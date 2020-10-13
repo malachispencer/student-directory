@@ -2,7 +2,7 @@ require 'fileutils'
 
 module RemoveDirectory
   def instructions
-    print 'Enter a directory from below to remove, '
+    print "\nEnter a directory from below to remove, "
     puts 'include file extension in the name.'
   end
 
@@ -20,12 +20,14 @@ module RemoveDirectory
 
   def remove_directory(directory)
     remove = are_you_sure?(directory)
-    FileUtils.rm_rf("./#{directory}") if remove == 'y'
-    puts "#{directory} deleted."
+    if remove == 'y'
+      FileUtils.rm_rf("./#{directory}") 
+      puts "#{directory} deleted."
+    end
   end
 
   def are_you_sure?(directory)
-    puts "Are you sure you wish to delete #{directory}?"
+    puts "\nAre you sure you wish to delete #{directory}?"
     puts 'Return y to continue.'
     puts "Any other key will cancel the process."
     remove = STDIN.gets.chomp

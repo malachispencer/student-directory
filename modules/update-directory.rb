@@ -41,8 +41,7 @@ module UpdateDirectory
     when '2'
       append_to_directory(directory)
     when '3'
-      #delete_students_from_dir
-      puts 'deleting...'
+      delete_from_directory(directory)
     when '9'
       selection
     end
@@ -85,6 +84,10 @@ module UpdateDirectory
     end
     noun = students.length == 1 ? 'student' : 'students'
     puts "#{students.length} #{noun} successfully added to #{directory}."
+  end
+
+  def delete_from_directory(directory)
+
   end
 
 
