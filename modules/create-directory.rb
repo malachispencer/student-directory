@@ -3,9 +3,13 @@ require 'date'
 module CreateDirectory
   def add_students
     @students = []
+
+    title = "\nAdding students to list, you can review your list before saving"
+    puts title
+    puts '-' * (title.length - 1)
   
     loop do
-      puts "\nAdd a student to the directory? (y/n)"
+      puts "\nAdd a student to the list? (y/n)"
       add_student = gets.chomp.downcase
   
       while !%w[y n].include?(add_student)
@@ -27,9 +31,9 @@ module CreateDirectory
     @students.push(student)
   
     if @students.length == 1
-      puts "We have #{@students.length} student."
+      puts "#{@students.length} student in list."
     else
-      puts "We have #{@students.length} students."
+      puts "#{@students.length} students in list."
     end
   end
 

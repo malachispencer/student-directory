@@ -58,6 +58,7 @@ module UpdateDirectory
  
   def append_to_directory(directory)
     students = CreateDirectory.add_students
+    return if students.empty?
     Print.header
     Print.students(students)
     append = append_students?(directory)
@@ -77,10 +78,13 @@ module UpdateDirectory
   end
 
   def append_students(directory, students)
-    CSV.open(directory, 'a') do |csv|
-      puts csv
+    CSV.open(directory, 'a') do |row|
+      students.each do |student|
+        row << [student[:name], " #{student[:cohort]}"]
+      end
     end
-
+    noun = students.length == 1 ? 'student' : 'students'
+    puts "#{students.length} #{noun} successfully added to #{directory}."
   end
 
 

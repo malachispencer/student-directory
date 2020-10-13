@@ -1,7 +1,8 @@
 module Print
   def main_menu
-    puts "\nMain menu"
-    puts '---------'
+    title = "\nMain menu"
+    puts title
+    puts '-' * (title.length - 1)
     puts '1. Create new directory'
     puts '2. Show existing directory'
     puts '3. Update existing directory'
@@ -12,7 +13,7 @@ module Print
   def header(filename = 'list')
     title = "\nstudents in #{filename}"
     puts title
-    puts '-' * title.length
+    puts '-' * (title.length - 1)
   end
   
   def students(students)
